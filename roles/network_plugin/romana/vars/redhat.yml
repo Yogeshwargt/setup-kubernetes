@@ -1,0 +1,4 @@
+romana_master_pkgs:
+  - mariadb-server
+  - python-simplejson
+  - python-requests

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: dnsmasq
-          image: andyshinn/dnsmasq:2.72
+          image: quay.io/smana/dnsmasq-calico:latest
           command:
             - dnsmasq
           args:
@@ -42,6 +42,8 @@ spec:
               mountPath: /etc/dnsmasq.d
             - name: etcdnsmasqdavailable
               mountPath: /etc/dnsmasq.d-available
+            - name: etcethers
+              mountPath: /etc/ethers
 
       volumes:
         - name: etcdnsmasqd
@@ -50,3 +52,6 @@ spec:
         - name: etcdnsmasqdavailable
           hostPath:
             path: /etc/dnsmasq.d-available
+        - name: etcethers
+          hostPath:
+            path: /etc/ethers

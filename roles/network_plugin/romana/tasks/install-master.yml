@@ -1,0 +1,51 @@
+---
+- name: Install romana binaries
+  command: rsync -piu "{{ local_release_dir }}/romana/bin/{{item}}" "/opt/cni/bin/{{item}}"
+  changed_when: false
+  with_items:
+    - topology
+    - root
+    - ipam
+    - tenant
+
+- name: Install packages requirements on Romana master
+  action:
+    module: "{{ ansible_pkg_mgr }}"
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{romana_master_pkgs | default([])}}" 
+
+- name: Install romana-topology systemd unit
+  template:
+    src: "systemd/romana-topology.service"
+    dest: "/usr/lib/systemd/system/romana-topology.service"
+  notify: restart romana-topology
+  when: ansible_service_mgr == "systemd"
+
+- name: Install romana-root systemd unit
+  template:
+    src: "systemd/romana-root.service"
+    dest: "/usr/lib/systemd/system/romana-root.service"
+  notify: restart romana-root
+  when: ansible_service_mgr == "systemd"
+
+- name: Install romana-ipam systemd unit
+  template:
+    src: "systemd/romana-ipam.service"
+    dest: "/usr/lib/systemd/system/romana-ipam.service"
+  notify: restart romana-ipam
+  when: ansible_service_mgr == "systemd"
+
+- name: Install romana-tenant systemd unit
+  template:
+    src: "systemd/romana-tenant.service"
+    dest: "/usr/lib/systemd/system/romana-tenant.service"
+  notify: restart romana-tenant
+  when: ansible_service_mgr == "systemd"
+
+- name: Install romana-topology systemd unit
+  template:
+    src: "systemd/romana-topology.service"
+    dest: "/usr/lib/systemd/system/romana-topology.service"
+  notify: restart romana-topology
+  when: ansible_service_mgr == "systemd"

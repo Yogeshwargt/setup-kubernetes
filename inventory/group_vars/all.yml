@@ -51,7 +51,7 @@ cluster_name: cluster.local
 # but don't know about that address themselves.
 # access_ip: 1.1.1.1
 
-# Choose network plugin (calico, weave or flannel)
+# Choose network plugin (calico, romana, weave or flannel)
 kube_network_plugin: flannel
 
 # Kubernetes internal network for services, unused block of space.

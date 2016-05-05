@@ -7,17 +7,23 @@ etcd_version: v2.2.5
 calico_version: v0.19.0
 calico_cni_version: v1.2.1
 weave_version: v1.5.0
+romana_version: v0.8.1
 
 # Download URL's
 kubelet_download_url: "https://storage.googleapis.com/kargo/{{kube_version}}_kubernetes-kubelet"
 apiserver_download_url: "https://storage.googleapis.com/kargo/{{kube_version}}_kubernetes-apiserver"
 kubectl_download_url: "https://storage.googleapis.com/kargo/{{kube_version}}_kubernetes-kubectl"
-
 etcd_download_url: "https://storage.googleapis.com/kargo/{{etcd_version}}_etcd"
 calico_download_url: "https://storage.googleapis.com/kargo/{{calico_version}}_calico"
 calico_cni_download_url: "https://storage.googleapis.com/kargo/{{calico_cni_version}}_calico-cni-plugin"
 calico_cni_ipam_download_url: "https://storage.googleapis.com/kargo/{{calico_cni_version}}_calico-cni-plugin-ipam"
 weave_download_url: "https://storage.googleapis.com/kargo/{{weave_version}}_weave"
+romana_cni_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-cni"
+romana_agent_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-agent"
+romana_topology_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-topology"
+romana_root_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-root"
+romana_tenant_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-tenant"
+romana_ipam_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-ipam"
 
 # Checksums
 calico_checksum: "6db00c94619e82d878d348c4e1791f8d2f0db59075f6c8e430fefae297c54d96"
@@ -28,8 +34,68 @@ etcd_checksum: "aa6037406257d2a1bc48ffa769afe7a4f8a04cc1ffcd36ef84f9ee8bc4eca756
 kubectl_checksum: "473e6924569fba30d4a50cecdc2cae5f31d97d1f662463e85b74a472105dcff4"
 kubelet_checksum: "f16827dc7e7c82f0e215f0fc73eb01e2dfe91a2ec83f9cbcaf8d37c91b64fd3b"
 kube_apiserver_checksum: "eb1bfd8b877052cbd1991b8c429a1d06661f4cb019905e20e128174f724e16de"
+romana_agent_checksum: "b028b192dc3982e715a24c3f81d3e4d1bee635ea8f98dfc26dec758b064c308b"
+romana_topology_checksum: "91f45e475a7469216fd095f31c2a50f5b23d605ed4fa16bb1f33ecbf977e78b7"
+romana_root_checksum: "c8dad470f29bdd94410eb841970cd740712c15078a0ef29edd7289a4a8338d6c"
+romana_ipam_checksum: "bed84397ea9be2508a15cb285e44bece994f4d5b6a2faa5100d825f920dc1137"
+romana_tenant_checksum: "b14d9fbc0ed6331794291c58e5098b1ce46e34f026fc93c344d858a4d9e2499d"
+romana_cni_checksum: "47825e0905bd8c3d274e87d68c4b373056006040b842d573aa5c7aed0415170a"
 
 downloads:
+  - name: romana-cni
+    dest: romana/bin/romana
+    version: "{{romana_version}}"
+    sha256: "{{ romana_cni_checksum }}"
+    source_url: "{{ romana_cni_download_url }}"
+    url: "{{ romana_cni_download_url }}"
+    owner: "root"
+    mode: "0755"
+
+  - name: romana-agent
+    dest: romana/bin/romana-agent
+    version: "{{romana_version}}"
+    sha256: "{{ romana_agent_checksum }}"
+    source_url: "{{ romana_agent_download_url }}"
+    url: "{{ romana_agent_download_url }}"
+    owner: "root"
+    mode: "0755"
+
+  - name: romana-topology
+    dest: romana/bin/romana-topology
+    version: "{{romana_version}}"
+    sha256: "{{ romana_topology_checksum }}"
+    source_url: "{{ romana_topology_download_url }}"
+    url: "{{ romana_topology_download_url }}"
+    owner: "root"
+    mode: "0755"
+
+  - name: romana-root
+    dest: romana/bin/romana-root
+    version: "{{romana_version}}"
+    sha256: "{{ romana_root_checksum }}"
+    source_url: "{{ romana_root_download_url }}"
+    url: "{{ romana_root_download_url }}"
+    owner: "root"
+    mode: "0755"
+
+  - name: romana-ipam
+    dest: romana/bin/romana-ipam
+    version: "{{romana_version}}"
+    sha256: "{{ romana_ipam_checksum }}"
+    source_url: "{{ romana_ipam_download_url }}"
+    url: "{{ romana_ipam_download_url }}"
+    owner: "root"
+    mode: "0755"
+
+  - name: romana-tenant
+    dest: romana/bin/romana-tenant
+    version: "{{romana_version}}"
+    sha256: "{{ romana_tenant_checksum }}"
+    source_url: "{{ romana_tenant_download_url }}"
+    url: "{{ romana_tenant_download_url }}"
+    owner: "root"
+    mode: "0755"
+
   - name: calico
     dest: calico/bin/calicoctl
     version: "{{calico_version}}"

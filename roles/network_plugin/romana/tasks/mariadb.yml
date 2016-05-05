@@ -1,0 +1,12 @@
+---
+- name: Set mysql password
+  command: mysqladmin password "{{ stack_password }}"
+
+- name: Install my.cnf
+  template: src="mysql/my.cnf" dest="~/.my.cnf" mode=0600
+  notify: restart mariadb
+
+- name: Make sure DB has started
+  service:
+    name: mariadb
+    state: started

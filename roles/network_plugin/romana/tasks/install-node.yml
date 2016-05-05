@@ -1,0 +1,22 @@
+---
+- name: Install packages requirements on nodes
+  action:
+    module: "{{ansible_pkg_mgr}}"
+    name: "{{item}}"
+    state: latest
+  with_items: "{{romana_node_pkgs | default([])}}" 
+
+- name: Install romana cni bin
+  command: rsync -piu "{{ local_release_dir }}/romana/bin/romana" "/opt/cni/bin/romana"
+  changed_when: false
+
+- name: Install romana agent bin
+  command: rsync -piu "{{ local_release_dir }}/romana/bin/agent"  "{{ kube_bin_dir }}/agent"
+  changed_when: false
+
+- name: Install romana-agent systemd unit
+  template:
+    src: "systemd/romana-agent.service"
+    dest: "/usr/lib/systemd/system/romana-agent.service"
+  notify: restart romana-agent
+  when: ansible_service_mgr == "systemd"
