@@ -6,17 +6,44 @@
     state: latest
   with_items: "{{romana_node_pkgs | default([])}}" 
 
+- name: Set docker daemon options
+  template:
+    src: docker
+    dest: "/etc/default/docker"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart docker
+
+- name: Write docker.service systemd file
+  template:
+    src: systemd-docker.service
+    dest: /lib/systemd/system/docker.service
+  notify: restart docker
+  when: ansible_service_mgr == "systemd" and ansible_os_family != "CoreOS"
+
 - name: Install romana cni bin
   command: rsync -piu "{{ local_release_dir }}/romana/bin/romana" "/opt/cni/bin/romana"
   changed_when: false
 
-- name: Install romana agent bin
-  command: rsync -piu "{{ local_release_dir }}/romana/bin/agent"  "{{ kube_bin_dir }}/agent"
+- name: Install romana agent binaries
+  command: rsync -piu "{{ local_release_dir }}/romana/bin/{{item}}"  "{{ kube_bin_dir }}/{{item}}"
   changed_when: false
+  with_items:
+    - agent
+    - romana-kube-agent
 
 - name: Install romana-agent systemd unit
   template:
     src: "systemd/romana-agent.service"
     dest: "/usr/lib/systemd/system/romana-agent.service"
   notify: restart romana-agent
+  when: ansible_service_mgr == "systemd"
+
+- name: Install romana-kube-agent systemd unit
+  template:
+    src: "systemd/romana-kube-agent.service"
+    dest: "/usr/lib/systemd/system/romana-kube-agent.service"
+  notify: restart romana-kube-agent
   when: ansible_service_mgr == "systemd"

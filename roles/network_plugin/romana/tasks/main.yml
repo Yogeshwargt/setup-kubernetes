@@ -2,7 +2,6 @@
 - name: Ensure install path exists
   file: path="{{item}}" state=directory
   with_items:
-    - "{{romana_lib_dir}}"
     - "{{romana_etc_dir}}"
 
 - name: gather os specific variables
@@ -23,12 +22,11 @@
   with_items:
     - install-master.yml
     - mariadb.yml
+    - configure-master.yml
   when: inventory_hostname == groups['kube-master'][0]
 
-- include: install-node.yml
+- include: "{{item}}"
+  with_items:
+    - install-node.yml
+    - configure-node.yml
   when: inventory_hostname in groups['kube-node']
-
-- name: Ensure romana-agent is running
-  service:
-    name: romana-agent
-    state: started

@@ -7,7 +7,7 @@ etcd_version: v2.2.5
 calico_version: v0.19.0
 calico_cni_version: v1.2.1
 weave_version: v1.5.0
-romana_version: v0.8.1
+romana_version: v0.8.2
 
 # Download URL's
 kubelet_download_url: "https://storage.googleapis.com/kargo/{{kube_version}}_kubernetes-kubelet"
@@ -19,6 +19,7 @@ calico_cni_download_url: "https://storage.googleapis.com/kargo/{{calico_cni_vers
 calico_cni_ipam_download_url: "https://storage.googleapis.com/kargo/{{calico_cni_version}}_calico-cni-plugin-ipam"
 weave_download_url: "https://storage.googleapis.com/kargo/{{weave_version}}_weave"
 romana_cni_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-cni"
+romana_kube_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-kube-agent"
 romana_agent_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-agent"
 romana_topology_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-topology"
 romana_root_download_url: "https://storage.googleapis.com/kargo/{{ romana_version }}_romana-root"
@@ -34,16 +35,26 @@ etcd_checksum: "aa6037406257d2a1bc48ffa769afe7a4f8a04cc1ffcd36ef84f9ee8bc4eca756
 kubectl_checksum: "473e6924569fba30d4a50cecdc2cae5f31d97d1f662463e85b74a472105dcff4"
 kubelet_checksum: "f16827dc7e7c82f0e215f0fc73eb01e2dfe91a2ec83f9cbcaf8d37c91b64fd3b"
 kube_apiserver_checksum: "eb1bfd8b877052cbd1991b8c429a1d06661f4cb019905e20e128174f724e16de"
-romana_agent_checksum: "b028b192dc3982e715a24c3f81d3e4d1bee635ea8f98dfc26dec758b064c308b"
-romana_topology_checksum: "91f45e475a7469216fd095f31c2a50f5b23d605ed4fa16bb1f33ecbf977e78b7"
-romana_root_checksum: "c8dad470f29bdd94410eb841970cd740712c15078a0ef29edd7289a4a8338d6c"
-romana_ipam_checksum: "bed84397ea9be2508a15cb285e44bece994f4d5b6a2faa5100d825f920dc1137"
-romana_tenant_checksum: "b14d9fbc0ed6331794291c58e5098b1ce46e34f026fc93c344d858a4d9e2499d"
-romana_cni_checksum: "47825e0905bd8c3d274e87d68c4b373056006040b842d573aa5c7aed0415170a"
+romana_agent_checksum: "11c53579d2da4475aa369622b5db1db625235ccdc1626982f943612b58c7218a"
+romana_topology_checksum: "217af9a699b40125c276b47911fb796df4d3a3058dd60d0b67aa75869f319bcc"
+romana_root_checksum: "9cd8ef5fba2cbc26d3f558f377338d178d37ef1109e4971c247c51fe07fe5e6d"
+romana_ipam_checksum: "234c4eef643595dbb0a77554e547b4426e5d6adabb8bccf37da86509a63fa1ac"
+romana_tenant_checksum: "d39e582a46b497d54f75f7a1ec4d851135ec9d6c66c46129301218dfce08d805"
+romana_cni_checksum: "7f37994af4347e7854a00ba955129b27966e7c859aa81487ca3e439f218532c7"
+romana_kube_checksum: "a20bb296ecd0ce5fe2ad0c4ef7c3be49211c5d96c15826bc847d98670027a0be"
 
 downloads:
   - name: romana-cni
     dest: romana/bin/romana
+    version: "{{romana_version}}"
+    sha256: "{{ romana_cni_checksum }}"
+    source_url: "{{ romana_cni_download_url }}"
+    url: "{{ romana_cni_download_url }}"
+    owner: "root"
+    mode: "0755"
+
+  - name: romana-kube-agent
+    dest: romana/bin/romana-kube-agent
     version: "{{romana_version}}"
     sha256: "{{ romana_cni_checksum }}"
     source_url: "{{ romana_cni_download_url }}"

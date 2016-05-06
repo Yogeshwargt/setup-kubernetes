@@ -1,12 +1,16 @@
 ---
 - name: Install romana binaries
-  command: rsync -piu "{{ local_release_dir }}/romana/bin/{{item}}" "/opt/cni/bin/{{item}}"
+  command: rsync -piu "{{ local_release_dir }}/romana/bin/{{item}}" "{{ kube_bin_dir }}/{{item}}"
   changed_when: false
   with_items:
     - topology
     - root
     - ipam
     - tenant
+
+- name: install romana network policy script
+  command: rsync -piu "{{ local_release_dir }}/romana/bin/romana-kube-agent" "{{ kube_bin_dir }}/romana-kube-np"
+  changed_when: false
 
 - name: Install packages requirements on Romana master
   action:
