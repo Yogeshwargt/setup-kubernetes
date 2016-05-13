@@ -6,8 +6,8 @@
 
 - name: Configure IP address for agent
   replace:
-    dest: "/usr/local/lib/romana-kube-agent"
-    regexp: "192\.168\.0\.10"
+    dest: "{{ bin_dir }}/romana-kube-agent"
+    regexp: "192\\.168\\.0\\.10"
     replace: "{{ romana_master_ip }}"
 
 # Check if the romana-gw already exists
