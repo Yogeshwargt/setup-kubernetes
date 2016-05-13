@@ -26,6 +26,8 @@ romana host add {{ hostvars[n].ansible_hostname }} {{ hostvars[n].ansible_defaul
 # Create some initial tenants and segments
 romana tenant create default
 romana segment add default default
+romana tenant create kube-system
+romana segment add kube-system default
 romana tenant create tenant-a
 romana segment add tenant-a default
 romana segment add tenant-a backend
