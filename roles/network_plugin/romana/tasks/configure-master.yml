@@ -32,7 +32,7 @@
     name: "{{ item }}"
     state: started
   with_items:
-    - topology
-    - tenant
-    - ipam
+    - romana-topology
+    - romana-tenant
+    - romana-ipam
     - romana-kube-np

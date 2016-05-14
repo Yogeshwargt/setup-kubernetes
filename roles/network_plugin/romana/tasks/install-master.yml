@@ -26,7 +26,7 @@
     - tenant
 
 - name: install romana network policy script
-  command: rsync -piu "{{ local_release_dir }}/romana/bin/romana-kube-agent" "{{ bin_dir }}/romana-kube-np"
+  command: rsync -piu "{{ local_release_dir }}/romana/bin/romana-kube-np" "{{ bin_dir }}/romana-kube-np"
   changed_when: false
 
 - name: Install packages requirements on Romana master
