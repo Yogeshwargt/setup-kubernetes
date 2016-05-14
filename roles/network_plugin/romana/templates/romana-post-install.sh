@@ -20,7 +20,7 @@ exec > /dev/null
 
 # Create hosts
 {% for n in groups['kube-node'] %}
-romana host add {{ hostvars[n].ansible_hostname }} {{ hostvars[n].ansible_default_ipv4['address'] }} {{ romana_cidr | ipsubnet(16, groups['kube-node'].index(n)) | ipaddr(1) }} 9604
+romana host add {{ hostvars[n].inventory_hostname }} {{ hostvars[n].ansible_default_ipv4['address'] }} {{ romana_cidr | ipsubnet(16, groups['kube-node'].index(n)) | ipaddr(1) }} 9604
 {% endfor %}
 
 # Create some initial tenants and segments
